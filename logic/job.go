@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"fmt"
 	"go-remind/db"
 	"go-remind/models"
 	"time"
@@ -18,6 +19,7 @@ func NewJob(content string, sendTime time.Time, phone, email string) *models.Job
 }
 
 func (j *JobLogic) Insert(job models.Job) error {
+	fmt.Printf("值是:%v",db.Gorm)
 	result := db.Gorm.Create(&job)
 	return result.Error
 }

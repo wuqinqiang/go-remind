@@ -2,9 +2,7 @@ package config
 
 import (
 	"encoding/json"
-	"log"
 	"os"
-	"sync"
 )
 
 type Wechat struct {
@@ -42,21 +40,18 @@ type Configuration struct {
 	Teng   *Teng
 }
 
-var once sync.Once
+var ConfAll *Configuration
 
-var All *Configuration
-
-func LoadConfig() {
-	once.Do(func() {
-		file, err := os.Open("config.json")
-		if err != nil {
-			log.Fatalln("can not open the file")
-		}
-		decoder := json.NewDecoder(file)
-		All = &Configuration{}
-		err = decoder.Decode(All)
-		if err != nil {
-			log.Fatalln("Cannot get configuration from file", err)
-		}
-	})
+func LoadConfig() error {
+	file, err := os.Open("config.json")
+	if err != nil {
+		return err
+	}
+	decoder := json.NewDecoder(file)
+	ConfAll = &Configuration{}
+	err = decoder.Decode(ConfAll)
+	if err != nil {
+		return err
+	}
+	return nil
 }

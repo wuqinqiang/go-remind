@@ -1,19 +1,19 @@
 package models
 
 import (
-	"gorm.io/gorm"
 	"time"
 )
 
 var (
-	// 待通知
-	JobWait = 2
 	// 通知成功
 	JobSuccess = 1
+	// 待通知
+	JobWait = 2
+	// 通知失败
+	JobFail = 3
 )
 
 type Job struct {
-	gorm.Model
 	Id         int64
 	Content    string
 	CreatedAt  time.Time
