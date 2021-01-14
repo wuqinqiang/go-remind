@@ -24,6 +24,6 @@ func main() {
 	go func() {
 		handlers.Scheduler()
 	}()
-	r.GET("/msg", handlers.Message)
+	r.POST("/msg", handlers.Message)
 	_ = r.Run(":8099")
 }
