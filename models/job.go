@@ -14,7 +14,7 @@ var (
 )
 
 type Job struct {
-	Id         int64
+	Id         int
 	Content    string
 	CreatedAt  time.Time
 	NoticeTime time.Time

@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"fmt"
 	"go-remind/db"
 	"go-remind/models"
 	"time"
@@ -18,8 +17,7 @@ func NewJob(content string, sendTime time.Time, phone, email string) *models.Job
 	}
 }
 
-func (j *JobLogic) Insert(job models.Job) error {
-	fmt.Printf("值是:%v",db.Gorm)
+func (j *JobLogic) Insert(job *models.Job) error {
 	result := db.Gorm.Create(&job)
 	return result.Error
 }
@@ -31,5 +29,5 @@ func (j *JobLogic) GetJobsByTime(startTime string, endTime string) (jobs []model
 }
 
 func (j *JobLogic) UpdateStatusById(id, status int) error {
-	return db.Gorm.Where("id=?", id).Update("status", status).Error
+	return db.Gorm.Model(&models.Job{}).Where("id=?", id).Update("status", status).Error
 }

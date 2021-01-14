@@ -21,6 +21,9 @@ func init() {
 
 func main() {
 	r := gin.Default()
+	go func() {
+		handlers.Scheduler()
+	}()
 	r.GET("/msg", handlers.Message)
 	_ = r.Run()
 }
