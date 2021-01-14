@@ -18,7 +18,7 @@ type Job struct {
 	Content    string
 	CreatedAt  time.Time
 	NoticeTime time.Time
-	Status     int8
+	Status     int
 	Phone      string
 	Email      string
 }

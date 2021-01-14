@@ -48,12 +48,12 @@ func Scheduler() {
 }
 
 func HandleNotice(job *models.Job) {
-	//now := tools.GetCurrTime()
-	//noticeTime, _ := time.ParseInLocation(tools.TimeFormat,
-	//	job.NoticeTime.Format(tools.TimeFormat), time.Local)
-	//diff := noticeTime.Sub(now)
-	//timer := time.NewTimer(diff)
-	//<-timer.C
+	now := tools.GetCurrTime()
+	noticeTime, _ := time.ParseInLocation(tools.TimeFormat,
+		job.NoticeTime.Format(tools.TimeFormat), time.Local)
+	diff := noticeTime.Sub(now)
+	timer := time.NewTimer(diff)
+	<-timer.C
 
 	email := &server.EmailMsg{Job: job}
 	err := server.Notice(email)

@@ -25,5 +25,6 @@ func main() {
 		handlers.Scheduler()
 	}()
 	r.POST("/msg", handlers.Message)
+
 	_ = r.Run(":8099")
 }

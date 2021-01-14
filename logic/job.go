@@ -14,6 +14,7 @@ func NewJob(content string, sendTime time.Time, phone, email string) *models.Job
 		NoticeTime: sendTime,
 		Phone:      phone,
 		Email:      email,
+		Status:     models.JobWait,
 	}
 }
 

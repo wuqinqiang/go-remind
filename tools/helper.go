@@ -20,7 +20,7 @@ func TimeString(time time.Time) string {
 }
 
 func StringToTimer(date string) time.Time {
-	res, _ := time.ParseInLocation("2006-01-02 15:04:05", date, cstSh)
+	res, _ := time.ParseInLocation(TimeFormat, date, cstSh)
 	return res
 }
 
