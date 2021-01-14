@@ -8,8 +8,8 @@ import (
 
 type JobLogic struct{}
 
-func NewJob(content string, sendTime time.Time, phone, email string) *models.Job {
-	return &models.Job{
+func NewJob(content string, sendTime time.Time, phone, email string) models.Job {
+	return models.Job{
 		Content:    content,
 		NoticeTime: sendTime,
 		Phone:      phone,
@@ -18,7 +18,7 @@ func NewJob(content string, sendTime time.Time, phone, email string) *models.Job
 	}
 }
 
-func (j *JobLogic) Insert(job *models.Job) error {
+func (j *JobLogic) Insert(job models.Job) error {
 	result := db.Gorm.Create(&job)
 	return result.Error
 }

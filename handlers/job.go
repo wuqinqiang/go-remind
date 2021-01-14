@@ -30,16 +30,14 @@ func Scheduler() {
 		}
 		// 任务通道
 		ch := make(chan models.Job, 100)
-
-		handleJob := func(ch <-chan models.Job) {
+		jobFunc := func(ch <-chan models.Job) {
 			for item := range ch {
 				// 发送通知
-				go HandleNotice(&item)
+				go HandleJob(item)
 			}
 		}
 		// 处理任务
-		go handleJob(ch)
-
+		go jobFunc(ch)
 		// 投递任务
 		for _, job := range jobs {
 			ch <- job
@@ -47,7 +45,7 @@ func Scheduler() {
 	}
 }
 
-func HandleNotice(job *models.Job) {
+func HandleJob(job models.Job) {
 	now := tools.GetCurrTime()
 	noticeTime, _ := time.ParseInLocation(tools.TimeFormat,
 		job.NoticeTime.Format(tools.TimeFormat), time.Local)
@@ -55,8 +53,15 @@ func HandleNotice(job *models.Job) {
 	timer := time.NewTimer(diff)
 	<-timer.C
 
-	email := &server.EmailMsg{Job: job}
-	err := server.Notice(email)
+	fmt.Printf("消息:%v\n", job.Content)
+
+	var sendTool server.Message
+
+	sendTool = &server.SmsMsg{Job: job}
+	if job.Phone == "" {
+		sendTool = &server.EmailMsg{Job: job}
+	}
+	err := server.Notice(sendTool)
 	//成功与否
 	isOk := models.JobSuccess
 	jobLogic := logic.JobLogic{}

@@ -123,7 +123,7 @@ func HandleMessage(content string) (string, error) {
 	if diff.Hours() < 1 {
 		//小于1个小时直接加入到定时器
 		go func() {
-			HandleNotice(job)
+			HandleJob(job)
 		}()
 		return fmt.Sprintf("%s分钟后短信提醒内容:%s", tools.Decimal(diff.Minutes()), content), nil
 	}

@@ -13,13 +13,15 @@ type Message interface {
 }
 
 type EmailMsg struct {
-	Job *models.Job
+	Job models.Job
 }
 
 func (email *EmailMsg) SendMessage() error {
+	fmt.Printf("成功给%s发送邮件\n", email.Job.Email)
+
 	sendMail := gomail.NewMessage()
 	sendMail.SetHeader(`From`, ConfAll.Email.User)
-	sendMail.SetHeader(`To`, "1185079673@qq.com")
+	sendMail.SetHeader(`To`, email.Job.Email)
 	sendMail.SetHeader(`Subject`, "来自吴亲库里的温馨提醒")
 	sendMail.SetBody(`text/html`, email.Job.Content)
 	err := gomail.NewDialer(
@@ -36,7 +38,7 @@ type SmsMsg struct {
 }
 
 func (email *SmsMsg) SendMessage() error {
-	fmt.Printf("发送短信：%v\n", email.Job)
+	fmt.Printf("成功给%s发送短信\n", email.Job.Phone)
 	return nil
 }
 

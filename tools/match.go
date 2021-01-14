@@ -37,7 +37,6 @@ var EmailMatch = contentRegexp{regexp.MustCompile(
 func getDateString(count int) string {
 	t := time.Now()
 	newTime := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
-	//通知时间
 	noticeTime := newTime.AddDate(0, 0, count)
 	logDay := noticeTime.Format("2006-01-02")
 	return logDay
